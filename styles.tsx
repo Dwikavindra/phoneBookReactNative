@@ -32,12 +32,57 @@ export default StyleSheet.create({
     right: 20,
   },
   modalAddContact: {
+    flex: 1,
     backgroundColor: Colors.white,
     alignSelf: 'center',
     alignItems: 'center',
-    justifyContent: 'center',
-    height: 300,
-    width: 300,
+    height: 700,
+    width: 350,
     margin: 50,
+  },
+  modalAddContactHeader: {
+    flexDirection: 'row',
+    height: 40,
+    borderColor: 'green',
+  },
+  modalAddContactHeaderText: {
+    justifyContent: 'center',
+    alignItems: `center`,
+    left: 20,
+    fontSize: 24,
+    fontWeight: '600',
+  },
+  modalAddContactProfile: {
+    top: 0,
+  },
+  textInputName: {
+    height: 50,
+    width: 300,
+    marginTop: 30,
+    alignSelf: 'center',
+  },
+  textInputPhoneNumber: {
+    height: 50,
+    width: 300,
+    marginTop: 30,
+    alignSelf: 'center',
+  },
+  addProfilePictureButton: {
+    marginTop: 10,
+    alignSelf: 'center',
+  },
+  addContactButton: {
+    marginTop: 100,
+    alignSelf: 'center',
+  },
+  modalCloseButton: {
+    left: 110,
+    bottom: 10,
+  },
+  item: {
+    backgroundColor: '#f9c2ff',
+    padding: 20,
+    marginVertical: 8,
+    marginHorizontal: 16,
   },
 });
