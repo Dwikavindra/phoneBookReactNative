@@ -8,9 +8,10 @@
  * @format
  */
 
-import * as React from 'react';
+import React from 'react';
+import {useState} from 'react';
 import styles from './styles';
-import {SafeAreaView, Text, View} from 'react-native';
+import {BackHandler, SafeAreaView, Text, View} from 'react-native';
 import {
   Searchbar,
   TextInput,
@@ -19,22 +20,34 @@ import {
   Modal,
   Portal,
 } from 'react-native-paper';
+import ModalAddContact from './ModalAddContact';
 
 export function App() {
+  const [text, setText] = useState<string>(' ');
+  const [visible, setVisible] = useState(false);
+  const showModal = () => setVisible(true);
+  const hideModal = () => setVisible(false);
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.container}>
         <Text style={styles.title}>Phone Book</Text>
-
+        <ModalAddContact
+          visible={visible}
+          onDismiss={hideModal}></ModalAddContact>
         <View style={styles.textInput}>
           <TextInput
+            onChange={() => {
+              setText(text);
+            }}
             style={styles.textInputPadding}
-            value="Search by phone number or name"
+            value={text}
             mode="flat"
             left={<TextInput.Icon name="magnify"></TextInput.Icon>}></TextInput>
         </View>
       </View>
+
       <IconButton
+        onPress={showModal}
         style={styles.floatingActionButton}
         icon="plus"
         size={50}

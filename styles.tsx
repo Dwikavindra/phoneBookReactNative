@@ -31,4 +31,13 @@ export default StyleSheet.create({
     alignSelf: 'flex-end',
     right: 20,
   },
+  modalAddContact: {
+    backgroundColor: Colors.white,
+    alignSelf: 'center',
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: 300,
+    width: 300,
+    margin: 50,
+  },
 });
