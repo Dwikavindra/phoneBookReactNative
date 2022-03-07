@@ -33,7 +33,8 @@ export function App() {
         <Text style={styles.title}>Phone Book</Text>
         <ModalAddContact
           visible={visible}
-          onDismiss={hideModal}></ModalAddContact>
+          onDismiss={hideModal}
+          setVisible={setVisible}></ModalAddContact>
         <View style={styles.textInput}>
           <TextInput
             onChange={() => {
