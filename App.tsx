@@ -3,12 +3,13 @@ import {useState, useContext} from 'react';
 import styles from './styles';
 
 import {SafeAreaView, Text, View, FlatList} from 'react-native';
-import {Searchbar, TextInput, IconButton, Colors} from 'react-native-paper';
+import {Searchbar, IconButton, Colors, TextInput} from 'react-native-paper';
 import ModalAddContact from './ModalAddContact';
-import {GlobalProvider} from './context/GlobalState';
-import {GlobalContext, ContactStates} from './context/GlobalState';
-import Cards from './Cards';
+import {GlobalProvider} from './src/context/GlobalState';
+import {GlobalContext, ContactStates} from './src/context/GlobalState';
+import Cards from './src/components/Cards';
 import ModalEditContact from './ModalEditContact';
+import {Icon} from 'react-native-paper/lib/typescript/components/Avatar/Avatar';
 
 interface ItemProps {
   name: String;

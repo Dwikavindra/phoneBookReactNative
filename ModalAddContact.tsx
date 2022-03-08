@@ -1,8 +1,8 @@
 import Modal from 'react-native-modal';
 import styles from './styles';
-import {Text, View} from 'react-native';
-import React, {useState, useContext} from 'react';
-import {GlobalContext, ContactStates} from './context/GlobalState';
+import {Text, View, Image} from 'react-native';
+import React, {useState, useContext, useEffect} from 'react';
+import {GlobalContext, ContactStates} from './src/context/GlobalState';
 
 import * as ImagePicker from 'react-native-image-picker';
 import {Asset} from 'react-native-image-picker';
@@ -13,7 +13,7 @@ import {
   Button,
   IconButton,
 } from 'react-native-paper';
-import {ContactType} from './context/ContactType';
+import {ContactType} from './src/context/ContactType';
 
 interface ModalAddContactProps {
   visible: boolean;
@@ -23,7 +23,9 @@ interface ModalAddContactProps {
 export default function ModalAddContact(props: ModalAddContactProps) {
   const [text, setTextName] = useState<string>();
   const [phoneNumber, setPhoneNumber] = useState<string>();
-  const [imageUri, setImageUri] = useState<string>('');
+  const [imageUri, setImageUri] = useState<string>(
+    'https://cdn.idntimes.com/content-images/post/20190204/img-20190203-235941-16c3a8a0cf0a39303830e8e107fd60d6.JPG',
+  );
   const {addContact, contacts} = useContext(GlobalContext) as ContactStates;
   const onChangeTextName = (text: string) => setTextName(text);
   const onChangeTextPhoneNumber = (text: string) => setPhoneNumber(text);
@@ -31,6 +33,12 @@ export default function ModalAddContact(props: ModalAddContactProps) {
     props.onDismiss();
     setImageUri(' ');
   };
+
+  useEffect(() => {
+    setImageUri(
+      'https://cdn.idntimes.com/content-images/post/20190204/img-20190203-235941-16c3a8a0cf0a39303830e8e107fd60d6.JPG',
+    );
+  }, [imageUri]);
   const onSubmit = () => {
     const newContact: ContactType = {
       id: Math.floor(Math.random() * 1000),
@@ -42,7 +50,9 @@ export default function ModalAddContact(props: ModalAddContactProps) {
     addContact(newContact);
     setTextName('');
     setPhoneNumber('');
-    setImageUri('');
+    setImageUri(
+      'https://cdn.idntimes.com/content-images/post/20190204/img-20190203-235941-16c3a8a0cf0a39303830e8e107fd60d6.JPG',
+    );
     props.onDismiss();
   };
 

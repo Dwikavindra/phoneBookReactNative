@@ -1,15 +1,8 @@
-import {
-  SafeAreaView,
-  Text,
-  View,
-  FlatList,
-  ScrollView,
-  ProgressViewIOSComponent,
-} from 'react-native';
+import {View, ScrollView} from 'react-native';
 import React, {useState, useContext, useEffect} from 'react';
-import {GlobalContext, ContactStates} from './context/GlobalState';
+import {GlobalContext, ContactStates} from '../context/GlobalState';
 import {Avatar, Card, Colors, IconButton} from 'react-native-paper';
-import {ContactType} from './context/ContactType';
+import {ContactType} from '../context/ContactType';
 
 interface CardProps {
   search: string;
@@ -27,10 +20,9 @@ const Cards = (props: CardProps) => {
   }, [props.search]);
   if (search?.length == 0 || search == ' ' || search == '') {
     return (
-      <View style={{flex: 1, marginTop: 5}}>
-        <ScrollView style={{flex: 1, marginTop: 60}}>
+      <View style={{flex: 1, marginTop: 10}}>
+        <ScrollView style={{flex: 1, marginTop: 10}}>
           {contacts.map((value, index) => {
-            console.log(contacts);
             return (
               <Card.Title
                 key={value.id}
@@ -77,8 +69,8 @@ const Cards = (props: CardProps) => {
       }
     });
     return (
-      <View style={{flex: 1, marginTop: 5}}>
-        <ScrollView style={{flex: 1, marginTop: 60}}>
+      <View style={{flex: 1, marginTop: 10}}>
+        <ScrollView style={{flex: 1, marginTop: 10}}>
           {newlistofContacts.map((value, index) => {
             console.log(contacts);
             return (

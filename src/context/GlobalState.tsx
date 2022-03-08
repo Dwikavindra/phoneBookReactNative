@@ -1,6 +1,7 @@
 import React, {ContextType, createContext, useEffect, useState} from 'react';
 
 import {ContactType} from './ContactType';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // type FavoriteAction = {
 //   type: string;
@@ -45,15 +46,35 @@ export const GlobalProvider: React.FC<React.ReactNode> = ({children}) => {
   const [imageUri, setImageUri] = useState<string>('');
 
   const AddToContacts = (contact: ContactType) => {
-    setContacts([...contacts, contact]);
+    storeData([...contacts, contact]);
     console.log(contacts);
   };
+  const storeData = async (value: ContactType[]) => {
+    try {
+      const jsonValue = JSON.stringify(value);
+      await AsyncStorage.setItem('contacts', jsonValue);
+    } catch (e) {
+      // saving error
+    }
+  };
 
+  const getData = async () => {
+    try {
+      const jsonValue = await AsyncStorage.getItem('contacts');
+      const value: ContactType[] | null =
+        jsonValue != null ? (JSON.parse(jsonValue) as ContactType[]) : null;
+      if (value != null) {
+        setContacts(value as ContactType[]);
+      }
+    } catch (e) {
+      // error reading value
+    }
+  };
   const removeContacts = (id: number) => {
     const newContacts: ContactType[] = contacts.filter(val => val.id != id);
 
     setContacts(newContacts);
-    // sessionStorage.setItem("favorites", JSON.stringify(newmovies));
+    storeData(newContacts);
   };
   const currentContact: ContactType = {
     id: id,
@@ -73,7 +94,7 @@ export const GlobalProvider: React.FC<React.ReactNode> = ({children}) => {
       }
     });
     setContacts(newContacts);
-    // sessionStorage.setItem("favorites", JSON.stringify(newmovies));
+    storeData(newContacts);
   };
 
   const setCurrentContacts = (
@@ -87,28 +108,16 @@ export const GlobalProvider: React.FC<React.ReactNode> = ({children}) => {
     setPhoneNumber(phoneNumber!!);
     setImageUri(image_uri!!);
   };
-  //   function getFavoritesFromSessionStorage() {
-  //     let favoriteslist = sessionStorage.getItem("favorites");
-  //     if (favoriteslist == null) {
-  //       return movies;
-  //     } else {
-  //       setMovies(JSON.parse(favoriteslist));
-  //     }
-  //   }
 
   //   useEffect(() => {
-  //     if (movies.length > 0) {
-  //       sessionStorage.setItem("favorites", JSON.stringify(movies));
+  //     if (contacts.length > 0) {
+  //       storeData(contacts);
   //     }
-  //   }, [movies]);
+  //   }, [contacts]);
 
-  //   useEffect(() => {
-  //     getFavoritesFromSessionStorage();
-  //   }, []);
   useEffect(() => {
-    console.log(contacts);
-    setContacts(contacts);
-  });
+    getData();
+  }, [contacts]);
 
   let values: ContactStates = {
     contacts: contacts,

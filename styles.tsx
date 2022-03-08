@@ -4,6 +4,7 @@ import {Colors} from 'react-native-paper';
 export default StyleSheet.create({
   container: {
     flex: 1,
+    flexDirection: 'column',
   },
 
   title: {
@@ -13,11 +14,21 @@ export default StyleSheet.create({
     fontWeight: '600',
   },
 
+  textInputContainer: {
+    flexDirection: 'row',
+    height: 5,
+    width: 300,
+    marginTop: 30,
+    alignSelf: 'center',
+    paddingTop: 10,
+    alignItems: `center`,
+  },
   textInput: {
     height: 20,
     width: 350,
     marginTop: 30,
     alignSelf: 'center',
+    marginBottom: 20,
   },
   textInputPadding: {
     paddingHorizontal: 10,

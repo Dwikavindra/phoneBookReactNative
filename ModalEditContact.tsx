@@ -2,7 +2,7 @@ import Modal from 'react-native-modal';
 import styles from './styles';
 import {Text, View} from 'react-native';
 import React, {useState, useContext, useEffect} from 'react';
-import {GlobalContext, ContactStates} from './context/GlobalState';
+import {GlobalContext, ContactStates} from './src/context/GlobalState';
 
 import * as ImagePicker from 'react-native-image-picker';
 import {Asset} from 'react-native-image-picker';
@@ -13,7 +13,7 @@ import {
   Button,
   IconButton,
 } from 'react-native-paper';
-import {ContactType} from './context/ContactType';
+import {ContactType} from './src/context/ContactType';
 
 interface ModalEditContactProps {
   visible: boolean;
@@ -30,7 +30,9 @@ export default function ModalEditContact(props: ModalEditContactProps) {
   );
   const [id, setID] = useState<number>(currentContact.id);
   const [imageUri, setImageUri] = useState<string | undefined>(
-    currentContact.image_uri,
+    currentContact.image_uri == null || currentContact.image_uri == undefined
+      ? 'https://cdn.idntimes.com/content-images/post/20190204/img-20190203-235941-16c3a8a0cf0a39303830e8e107fd60d6.JPG'
+      : currentContact.image_uri,
   );
   const onChangeTextName = (text: string) => setTextName(text);
   const onChangeTextPhoneNumber = (text: string) => setPhoneNumber(text);
