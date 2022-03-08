@@ -7,8 +7,8 @@ import {Searchbar, TextInput, IconButton, Colors} from 'react-native-paper';
 import ModalAddContact from './ModalAddContact';
 import {GlobalProvider} from './context/GlobalState';
 import {GlobalContext, ContactStates} from './context/GlobalState';
-import {ContactType} from './context/ContactType';
 import Cards from './Cards';
+import ModalEditContact from './ModalEditContact';
 
 interface ItemProps {
   name: String;
@@ -19,14 +19,15 @@ const Item = (props: ItemProps) => (
   </View>
 );
 export function App() {
-  const [text, setText] = useState<string>();
+  const [text, setText] = useState<string>('');
   const [visible, setVisible] = useState(false);
+  const [isModalEditVisible, setModalEditVisible] = useState(false);
   const showModal = () => setVisible(true);
   const hideModal = () => setVisible(false);
+  const showModalEdit = () => setModalEditVisible(true);
+  const hideModalEdit = () => setModalEditVisible(false);
   const {contacts} = useContext(GlobalContext) as ContactStates;
   const onChangeTextName = (text: string) => setText(text);
-  const containerStyle = {backgroundColor: 'white', padding: 20};
-  const renderItem = ({name}: ContactType) => <Item name={name} />;
 
   useEffect(() => {
     console.log('FROM App.tsx');
@@ -40,6 +41,11 @@ export function App() {
           <ModalAddContact
             visible={visible}
             onDismiss={hideModal}></ModalAddContact>
+
+          <ModalEditContact
+            visible={isModalEditVisible}
+            onDismiss={hideModalEdit}></ModalEditContact>
+
           <View style={styles.textInput}>
             <TextInput
               onChangeText={onChangeTextName}
@@ -51,7 +57,9 @@ export function App() {
               activeOutlineColor={Colors.blue100}
               theme={{colors: {background: 'transparent'}}}></TextInput>
           </View>
-          <Cards></Cards>
+          <Cards
+            setModalEditContactVisible={showModalEdit}
+            search={text}></Cards>
         </View>
 
         <IconButton
