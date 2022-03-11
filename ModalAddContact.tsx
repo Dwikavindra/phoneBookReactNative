@@ -38,7 +38,7 @@ export default function ModalAddContact(props: ModalAddContactProps) {
     setImageUri(
       'https://cdn.idntimes.com/content-images/post/20190204/img-20190203-235941-16c3a8a0cf0a39303830e8e107fd60d6.JPG',
     );
-  }, [imageUri]);
+  }, []);
   const onSubmit = () => {
     const newContact: ContactType = {
       id: Math.floor(Math.random() * 1000),
@@ -66,7 +66,6 @@ export default function ModalAddContact(props: ModalAddContactProps) {
       const arrayResult: any = result.assets;
       console.log(arrayResult[0].uri);
       setImageUri(arrayResult[0].uri);
-      arrayResult[0] = '';
     } catch (error) {
       console.log(error);
     }

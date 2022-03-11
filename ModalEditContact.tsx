@@ -28,6 +28,8 @@ export default function ModalEditContact(props: ModalEditContactProps) {
   const [phoneNumber, setPhoneNumber] = useState<string | undefined>(
     currentContact.phoneNumber,
   );
+
+  //error on modal edit is because every build the file path changes as long as the build is not different should be fine
   const [id, setID] = useState<number>(currentContact.id);
   const [imageUri, setImageUri] = useState<string | undefined>(
     currentContact.image_uri == null || currentContact.image_uri == undefined
@@ -38,15 +40,21 @@ export default function ModalEditContact(props: ModalEditContactProps) {
   const onChangeTextPhoneNumber = (text: string) => setPhoneNumber(text);
   const onBackdropPress = () => {
     props.onDismiss();
-    setImageUri(' ');
   };
 
   useEffect(() => {
     setTextName(currentContact.name);
-    setImageUri(currentContact.image_uri);
+  }, [currentContact.name]);
+
+  useEffect(() => {
     setPhoneNumber(currentContact.phoneNumber);
+  }, [currentContact.phoneNumber]);
+  useEffect(() => {
     setID(currentContact.id);
-  }, [currentContact]);
+  }, [currentContact.id]);
+  useEffect(() => {
+    setImageUri(currentContact.image_uri);
+  }, [currentContact.image_uri]);
   const onSubmit = () => {
     const newContact: ContactType = {
       id: id,
@@ -62,14 +70,10 @@ export default function ModalEditContact(props: ModalEditContactProps) {
       newContact.phoneNumber,
     );
     editContact(id, newContact);
-    setTextName('');
-    setPhoneNumber('');
-    setImageUri('');
     props.onDismiss();
   };
 
   const handleChoosePhoto = async () => {
-    const options = {};
     try {
       const result = await ImagePicker.launchImageLibrary({
         selectionLimit: 1,
@@ -78,7 +82,6 @@ export default function ModalEditContact(props: ModalEditContactProps) {
       const arrayResult: any = result.assets;
       console.log(arrayResult[0].uri);
       setImageUri(arrayResult[0].uri);
-      arrayResult[0] = '';
     } catch (error) {
       console.log(error);
     }
@@ -105,7 +108,7 @@ export default function ModalEditContact(props: ModalEditContactProps) {
           icon="camera"
           mode="text"
           onPress={handleChoosePhoto}>
-          Add Photo
+          Change Photo
         </Button>
         <TextInput
           onChangeText={text => onChangeTextName(text)}
@@ -126,7 +129,7 @@ export default function ModalEditContact(props: ModalEditContactProps) {
           icon="plus"
           mode="contained"
           onPress={onSubmit}>
-          Add
+          Edit
         </Button>
       </View>
     </Modal>
